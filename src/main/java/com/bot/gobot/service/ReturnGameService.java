@@ -10,10 +10,8 @@ import reactor.core.publisher.Mono;
 public class ReturnGameService extends MessageListener implements EventListener<MessageCreateEvent> {
 
     @Override
-    public Class<MessageCreateEvent> getEventType(){
+    public Class<MessageCreateEvent> getEventType() {
         return MessageCreateEvent.class;
-
-
     }
 
     @Override

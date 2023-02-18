@@ -12,8 +12,6 @@ public class test {
 
 
     String so;
-
-
     String sso;
 
     @Autowired

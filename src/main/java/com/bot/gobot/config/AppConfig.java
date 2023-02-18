@@ -13,24 +13,20 @@ import java.util.List;
 @Configuration
 public class AppConfig {
 
-
     @Value("${discord.token}")
     private String token;
 
     @Bean
-    public <T extends Event>GatewayDiscordClient gatewayDiscordClient(final List<EventListener> eventListeners){
+    public <T extends Event> GatewayDiscordClient gatewayDiscordClient(final List<EventListener> eventListeners) {
 
         final GatewayDiscordClient client = DiscordClientBuilder.create(token)
                 .build().login().block();
-
-        for (final EventListener<T> listener:eventListeners){
+        for (final EventListener<T> listener : eventListeners) {
             client.on(listener.getEventType())
                     .flatMap(listener::execute)
                     .onErrorResume(listener::handleError)
                     .subscribe();
         }
-
         return client;
-
     }
 }

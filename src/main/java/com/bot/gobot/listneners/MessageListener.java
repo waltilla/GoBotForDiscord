@@ -20,7 +20,7 @@ public abstract class MessageListener {
                    return isNotBot;
                })
                .flatMap(Message::getChannel)
-               .flatMap(channel -> channel.createMessage())
+               .flatMap(channel -> channel.createMessage("echo " + author))
                .then();
 
        // Skriv om för att ta in message och sedan skicka ut bilden.

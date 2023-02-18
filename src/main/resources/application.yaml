@@ -5,7 +5,7 @@
 discord:
   applicationid: "id"
   publickey: "public_key"
-
+  token: "token"
 
 
 

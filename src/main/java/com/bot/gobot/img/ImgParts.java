@@ -22,6 +22,7 @@ public class ImgParts {
     int[][] right;
     int[][] top;
     int[][] bottom;
+    int[][] san;
 
     public ImgParts() {
         this.blackstone = PictureTo2DArray.convert("src/main/resources/blackstone.bmp");
@@ -37,5 +38,7 @@ public class ImgParts {
         this.right= PictureTo2DArray.convert("src/main/resources/right.bmp");
         this.top= PictureTo2DArray.convert("src/main/resources/top.bmp");
         this.bottom= PictureTo2DArray.convert("src/main/resources/bottom.bmp");
+        this.san= PictureTo2DArray.convert("src/main/resources/san.bmp");
+
     }
 }

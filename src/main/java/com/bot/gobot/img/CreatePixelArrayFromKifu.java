@@ -6,7 +6,7 @@ public class CreatePixelArrayFromKifu {
 
     public static int[][] createImageOfGobanFromKifu(String[][] goban, Kifu kifu) {
 
-        updateGobanWithPositionsFromKifu(kifu);
+        updateGobanWithPositionsFromKifu(goban, kifu);
 
         int lenghtOfSinlgeTile = get2dArrayofPictureFromString(goban[0][0]).length;
 
@@ -58,10 +58,17 @@ public class CreatePixelArrayFromKifu {
         };
     }
 
-    public static String[][] updateGobanWithPositionsFromKifu(Kifu kifu){
-        String[][] goban = getCleanGoban();
-        kifu.getKifu().forEach(stone -> goban[stone.positionX][stone.positionY] = stone.getColor());
+    public static String[][] updateGobanWithPositionsFromKifu(String[][] goban, Kifu kifu){
+        kifu.getKifu().forEach(stone -> goban[stone.positionX][stone.positionY] = nameToChar(stone.getColor()));
         return goban;
+    }
+
+    public static String nameToChar(String stone){
+        if(stone.equals("black")){
+            return "b";
+        }else{
+            return "w";
+        }
     }
 
     public static String[][] getCleanGoban(){
@@ -88,7 +95,6 @@ public class CreatePixelArrayFromKifu {
         };
         return goban;
     }
-
     //Debug goban
       /*      String[][] goban = {
                 {"y", "å", "å","å"},
@@ -96,7 +102,5 @@ public class CreatePixelArrayFromKifu {
                 {"å", "y", "å","å"},
                 {"å", "y", "å","å"}
         };*/
-
-
 
 }

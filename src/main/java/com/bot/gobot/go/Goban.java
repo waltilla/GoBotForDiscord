@@ -2,7 +2,7 @@ package com.bot.gobot.go;
 
 public class Goban {
 
-    public static String[][] getCleanGoban(){
+    public static String[][] getCleanGoban() {
         String[][] goban = {
                 {"tl", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "t", "tr"},
                 {"l", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "r"},

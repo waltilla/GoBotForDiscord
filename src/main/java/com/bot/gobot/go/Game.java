@@ -1,37 +1,51 @@
 package com.bot.gobot.go;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 public class Game {
 
     Kifu kifu;
     String lastPlayerToPutAMove;
     boolean firstMove = true;
-    String black = null;
-    String white = null;
+    List<Player> players;
 
     public Game() {
+        players = new ArrayList<>();
         this.kifu = new Kifu();
     }
 
-    public void addMove(String player, String color, String move) {
+    public void addMove(String playerMakingMove, String playedPosition) {
         if (firstMove) {
-            black = player;
             firstMove = false;
-            kifu.addMove(moveToStone(player, color, move));
-        }
-        if (kifu.getKifu().size() == 1 && player != black) {
-            white = player;
+            players.add(new Player(playerMakingMove, "black"));
+            kifu.addMove(moveToStone(players.get(0), playedPosition));
+            lastPlayerToPutAMove = playerMakingMove;
         }
 
-        if (lastPlayerToPutAMove != player) {
-            kifu.addMove(moveToStone(player, color, move));
+        if (players.size() == 1 && lastPlayerToPutAMove.equals(players.get(0).getPlayer())) {
+            players.add(new Player(playerMakingMove, "white"));
+            kifu.addMove(moveToStone(players.get(1), playedPosition));
+            lastPlayerToPutAMove = playerMakingMove;
+        }
+
+        if (lastPlayerToPutAMove != playerMakingMove) {
+            Player player = players.stream().filter(s -> s.player.equals(playerMakingMove)).findAny().get();
+            kifu.addMove(moveToStone(player, playedPosition));
+            lastPlayerToPutAMove = player.getPlayer();
         }
     }
 
-
-    public Stone moveToStone(String player, String color, String move) {
-        String[] split = move.split("-");
-        return new Stone(player, color, Integer.getInteger(split[0]), Integer.getInteger(split[1]));
+    public Stone moveToStone(Player player, String move) {
+        String[] strArray = move.split("-");
+        return new Stone(player.getPlayer(),
+                player.getColor(),
+                Integer.parseInt(strArray[0]) - 1,
+                Integer.parseInt(strArray[1]) - 1);
     }
-
-
 }

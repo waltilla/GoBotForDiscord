@@ -29,7 +29,7 @@ public class ImgParts {
         this.intersection  = PictureTo2DArray.convert("src/main/resources/intersection.bmp");
         this.lowerLeft = PictureTo2DArray.convert("src/main/resources/lowerleft.bmp");
         this.lowerRight= PictureTo2DArray.convert("src/main/resources/lowerright.bmp");
-        this.upperLeft = PictureTo2DArray.convert("src/main/resources/blackstone.bmp");
+        this.upperLeft = PictureTo2DArray.convert("src/main/resources/upperleft.bmp");
         this.upperRight  = PictureTo2DArray.convert("src/main/resources/upperright.bmp");
         this.whitestone= PictureTo2DArray.convert("src/main/resources/whitestone.bmp");
         this.debug2= PictureTo2DArray.convert("src/main/resources/debug2.bmp");
@@ -39,6 +39,5 @@ public class ImgParts {
         this.top= PictureTo2DArray.convert("src/main/resources/top.bmp");
         this.bottom= PictureTo2DArray.convert("src/main/resources/bottom.bmp");
         this.san= PictureTo2DArray.convert("src/main/resources/san.bmp");
-
     }
 }

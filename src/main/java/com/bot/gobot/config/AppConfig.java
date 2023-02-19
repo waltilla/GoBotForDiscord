@@ -16,6 +16,7 @@ public class AppConfig {
     @Value("${discord.token}")
     private String token;
 
+
     @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(final List<EventListener> eventListeners) {
 

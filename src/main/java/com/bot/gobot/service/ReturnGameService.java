@@ -18,5 +18,4 @@ public class ReturnGameService extends MessageListener implements EventListener<
     public Mono<Void> execute(MessageCreateEvent event) {
         return processMessage(event.getMessage());
     }
-
 }

@@ -26,8 +26,8 @@ public class test {
         System.out.println(so);
         System.out.println(sso);
 
-        CreatePixelArrayFromKifu createPixelArrayFromKifu = new CreatePixelArrayFromKifu();
+        /*CreatePixelArrayFromKifu createPixelArrayFromKifu = new CreatePixelArrayFromKifu();
         ImageFromIntArray.generate(createPixelArrayFromKifu.createBigArrayFromGobanAndPictures());
-
+*/
     }
 }

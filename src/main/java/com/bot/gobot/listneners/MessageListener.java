@@ -20,6 +20,8 @@ public abstract class MessageListener {
         InputStream targetStream = null;
 
 
+        String content = eventMessage.getContent();
+
         try {
             targetStream =
                     new DataInputStream(new FileInputStream("src/main/resources/Output.png"));
@@ -35,14 +37,23 @@ public abstract class MessageListener {
                             .map(user -> !user.isBot())
                             .orElse(false);
 
+                    System.out.println(message.getData().content());
+
                     if (canPlay) {
                         message.getAuthor().ifPresent(listOfUsers::contains);
                     }
+
+
                     return canPlay;
                 })
+
                 .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage(MessageCreateSpec.builder()
-                        .content("Your move: " + channel.getLastMessage().toString())
+                .flatMap(channel ->
+
+
+
+                    channel.createMessage(MessageCreateSpec.builder()
+                        .content("Your move: "   + content )
                         .addFile("src/main/resources/Output.png", finalTargetStream)
                         .build()))
                 .then();

@@ -25,7 +25,7 @@ public abstract class MessageListener {
 
     public Mono<Void> processMessage(final Message eventMessage) {
 
-        List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim", "Vickypod");
+        List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim", "Vickypod", "Bullenjullen");
         InputStream targetStream = null;
 
 
@@ -61,7 +61,7 @@ public abstract class MessageListener {
                             }
 
                             try {
-                                game.addMove(eventMessage.getAuthor().toString(), substring);
+                                game.addMove(eventMessage.getAuthor().get().getUsername(), substring);
 
                             } catch (Exception e) {
                                 System.out.println("prutt");
@@ -80,9 +80,9 @@ public abstract class MessageListener {
 
                     return canPlay;
                 })
-
                 .flatMap(Message::getChannel)
                 .flatMap(channel ->
+
 
 
                         channel.createMessage(MessageCreateSpec.builder()

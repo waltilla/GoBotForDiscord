@@ -28,7 +28,7 @@ public class Game {
             lastPlayerToPutAMove = playerMakingMove;
         }
 
-        if (players.size() == 1) {
+        if (players.size() == 1 && playerMakingMove != players.get(0).getPlayer()) {
             players.add(new Player(playerMakingMove, "white"));
             kifu.addMove(moveToStone(players.get(1), playedPosition));
             lastPlayerToPutAMove = playerMakingMove;

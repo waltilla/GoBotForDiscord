@@ -1,6 +1,5 @@
 package com.bot.gobot.go;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +11,5 @@ public class Stone {
     public String player;
     public String color;
     public int positionX;
-   public  int positionY;
-
+    public int positionY;
 }

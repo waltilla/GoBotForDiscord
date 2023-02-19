@@ -11,7 +11,6 @@ public interface EventListener<T extends Event> {
 
     default Mono<Void> handleError(final Throwable error){
         error.printStackTrace();
-
         return Mono.empty();
     }
 }

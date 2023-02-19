@@ -32,9 +32,7 @@ public class Game {
             players.add(new Player(playerMakingMove, "white"));
             kifu.addMove(moveToStone(players.get(1), playedPosition));
             lastPlayerToPutAMove = playerMakingMove;
-        }
-
-        if (lastPlayerToPutAMove != playerMakingMove) {
+        }else {
             Player player = players.stream().filter(s -> s.player.equals(playerMakingMove)).findAny().get();
             kifu.addMove(moveToStone(player, playedPosition));
             lastPlayerToPutAMove = player.getPlayer();

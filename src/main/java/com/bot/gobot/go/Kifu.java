@@ -10,7 +10,11 @@ public class Kifu {
 
     List<Stone> kifu;
 
-    public Kifu(List<Kifu> kifu) {
+    public Kifu() {
         this.kifu = new ArrayList<Stone>();
+    }
+
+    public void addMove(Stone stone) {
+        kifu.add(stone);
     }
 }

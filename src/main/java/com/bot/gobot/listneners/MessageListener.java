@@ -13,7 +13,6 @@ import java.util.List;
 
 public abstract class MessageListener {
 
-
     public Mono<Void> processMessage(final Message eventMessage) {
 
         List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim");

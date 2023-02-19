@@ -9,7 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Stone {
+    public String player;
     public String color;
     public int positionX;
    public  int positionY;
+
 }

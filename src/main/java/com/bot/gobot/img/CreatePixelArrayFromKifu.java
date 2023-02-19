@@ -4,7 +4,9 @@ import com.bot.gobot.go.Kifu;
 
 public class CreatePixelArrayFromKifu {
 
-    public static int[][] createBigArrayFromGobanAndPictures(String[][] goban) {
+    public static int[][] createImageOfGobanFromKifu(String[][] goban, Kifu kifu) {
+
+        updateGobanWithPositionsFromKifu(kifu);
 
         int lenghtOfSinlgeTile = get2dArrayofPictureFromString(goban[0][0]).length;
 

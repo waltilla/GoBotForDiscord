@@ -46,11 +46,17 @@ public abstract class MessageListener {
 
                     System.out.println(message.getData().content());
 
+
+
+
                     if (canPlay) {
                         message.getAuthor().ifPresent(listOfUsers::contains);
 
                         String messageFromPlayer = eventMessage.getContent();
 
+                        if (messageFromPlayer.charAt(0) != '&'){
+                            return false;
+                        }
 
                         if (messageFromPlayer.charAt(0) == '&') {
 
@@ -76,6 +82,7 @@ public abstract class MessageListener {
 
 
                     }
+
 
 
                     return canPlay;

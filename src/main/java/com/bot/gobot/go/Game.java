@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class Game {
             players.add(new Player(playerMakingMove, "white"));
             kifu.addMove(moveToStone(players.get(1), playedPosition));
             lastPlayerToPutAMove = playerMakingMove;
-        }else {
+        }else if (!Objects.equals(lastPlayerToPutAMove, playerMakingMove)){
             Player player = players.stream().filter(s -> s.player.equals(playerMakingMove)).findAny().get();
             kifu.addMove(moveToStone(player, playedPosition));
             lastPlayerToPutAMove = player.getPlayer();

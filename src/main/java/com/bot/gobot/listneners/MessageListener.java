@@ -47,17 +47,15 @@ public abstract class MessageListener {
                     System.out.println(message.getData().content());
 
 
-
-
                     if (canPlay) {
+
                         message.getAuthor().ifPresent(listOfUsers::contains);
-
                         String messageFromPlayer = eventMessage.getContent();
-
-                        if (messageFromPlayer.charAt(0) != '&'){
+                        if (messageFromPlayer.charAt(0) != '&' && eventMessage.getData().channelId().asString().equals("1075151561401061386")) {
                             return false;
                         }
 
+                        // The bot responds "only" if its starts with &
                         if (messageFromPlayer.charAt(0) == '&') {
 
                             String substring = messageFromPlayer.substring(1);
@@ -68,28 +66,22 @@ public abstract class MessageListener {
 
                             try {
                                 game.addMove(eventMessage.getAuthor().get().getUsername(), substring);
-
                             } catch (Exception e) {
                                 System.out.println("prutt");
                             }
-
 
                             ImageFromIntArray.generate(
                                     CreatePixelArrayFromKifu.
                                             createImageOfGobanFromKifu(Goban.getCleanGoban(), game.getKifu()));
 
                         }
-
-
                     }
-
 
 
                     return canPlay;
                 })
                 .flatMap(Message::getChannel)
                 .flatMap(channel ->
-
 
 
                         channel.createMessage(MessageCreateSpec.builder()

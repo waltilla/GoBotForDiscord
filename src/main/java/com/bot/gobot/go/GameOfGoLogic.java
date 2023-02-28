@@ -5,6 +5,7 @@ import java.util.*;
 public class GameOfGoLogic {
 
     public static void main(String[] args) {
+
      String[][] gobanCaptureOneWhiteStone = {
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
@@ -91,15 +92,15 @@ public class GameOfGoLogic {
 
 
 
-        String[][] bs = new GameOfGoLogic().updateGoboardCheckIfStonesIsCaptured(gobanCaptureOneWhiteStone, "b", 5, 5);
+        String[][] gobanWithRemovedDeadStone = new GameOfGoLogic().updateGoboardCheckIfStonesIsCaptured(gobanCaptureOneWhiteStone, "b", 5, 5);
 
-        if(Arrays.deepEquals(gobanCapturedOneWhiteStone, bs)){
+        if(Arrays.deepEquals(gobanCapturedOneWhiteStone, gobanWithRemovedDeadStone)){
             System.out.println("Johan youre the master! ");
         };
 
     }
 
-    private String[][] updateGoboardCheckIfStonesIsCaptured(String[][] gobanCaptureOneWhiteStone, String color, int x, int y) {
+    private String[][] updateGoboardCheckIfStonesIsCaptured(String[][] goban, String color, int x, int y) {
 
         //Implement code
 
@@ -123,6 +124,43 @@ public class GameOfGoLogic {
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."}};
+
+
+
+        updateGobanWithPositionsFromKifu(goban, kifu);
+
+   /*     public String color;
+        public int ;
+        int liberties;
+        List<Stone> neighbours;*/
+
+        for (int positionX = 0; positionX < goban.length; positionX++) {
+            for (int positionY = 0; positionY < goban.length; positionY++) {
+
+                if(positionX != x && positionY != y){
+
+                    LogicStone stone = new LogicStone(goban[x][y], positionX, positionY);
+
+                    //Check stone to the right and check color to subtract liberties
+                    if(!goban[x + 1][y].equals(".")){
+
+                        if(!goban[x + 1][y].equals(stone.color))
+
+                    }
+
+
+
+
+                }
+
+
+                String s = goban[row][col];
+
+            }
+        }
+
+        return bigPicture;
+
 
         return thisIsHowItLooksAfterTheCodeIsImplemented;
     }

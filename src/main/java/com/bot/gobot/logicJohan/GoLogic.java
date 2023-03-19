@@ -24,7 +24,7 @@ public class GoLogic {
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
-            boolean remove = checkIfStonesNeighboursHasAnyLiberties(goban, whiteStone.color, whiteStone.positionY, whiteStone.getPositionY());
+            boolean remove = checkIfStonesNeighboursHasAnyLiberties(goban, whiteStone.color, whiteStone.getPositionX(), whiteStone.getPositionY());
             // remove stones from the board
             if (!remove) {
                 removeDeadStones(goban);
@@ -111,9 +111,8 @@ public class GoLogic {
     }
 
     private String[][] removeDeadStones(String[][] goban) {
-        stonesToBeRemoved.forEach(stoneToBeRemoved -> {
-            goban[stoneToBeRemoved.getPositionX()][stoneToBeRemoved.getPositionY()] = ".";
-        });
+        stonesToBeRemoved.forEach(stoneToBeRemoved ->
+            goban[stoneToBeRemoved.getPositionX()][stoneToBeRemoved.getPositionY()] = ".");
         return goban;
     }
 
@@ -143,9 +142,9 @@ public class GoLogic {
     }
 
     private void printGoban(String[][] goban) {
-        for (int row = 0; row < goban.length; row++) {
-            for (int ind = 0; ind < goban[row].length; ind++) {
-                System.out.print(goban[row][ind] + " ");
+        for (String[] strings : goban) {
+            for (int ind = 0; ind < strings.length; ind++) {
+                System.out.print(strings[ind] + " ");
             }
             System.out.println();
         }

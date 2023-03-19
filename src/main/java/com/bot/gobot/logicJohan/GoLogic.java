@@ -24,7 +24,7 @@ public class GoLogic {
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
-            boolean remove = checkIfStonesNeighboursHasAnyLiberties(goban, whiteStone.color, whiteStone.getPositionX(), whiteStone.getPositionY());
+            boolean remove = checkIfStonesNeighboursHasAnyLiberties(goban, whiteStone.getColor(), whiteStone.getPositionX(), whiteStone.getPositionY());
             // remove stones from the board
             if (!remove) {
                 removeDeadStones(goban);
@@ -192,6 +192,7 @@ public class GoLogic {
         public int getPositionY() {
             return positionY;
         }
+        public String getColor(){ return color;}
     }
 
 }

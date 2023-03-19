@@ -43,17 +43,25 @@ public class GoLogic {
             checkFourNeightbours(goban, stoneColor, x, y);
             // if it reaches here, its probably dead stones...
             return false;
-        } catch (StoneHasLibertiesBreakSearchException e) {
+        } catch (StoneHasLibertiesBreakSearchException e ) {
             return true;
+        } catch (AvoidStackOverflowException t){
+            return false;
         }
     }
 
     public boolean checkFourNeightbours(String[][] goban, String stoneColor, int x, int y) {
-        count++;
-        if(count == 100){
-            return false;
-        }
-        stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+
+
+        if(stonesToBeRemoved.stream()
+                .filter(a ->
+                        a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor))
+                .count() == 0){
+
+            stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+
+            };
+
         checkNeighbour(goban, stoneColor, x + 1, y); // to right
         checkNeighbour(goban, stoneColor, x - 1, y); // to left
         checkNeighbour(goban, stoneColor, x, y + 1); // to on top
@@ -62,7 +70,10 @@ public class GoLogic {
     }
 
     private void checkNeighbour(String[][] goban, String stoneColor, int x, int y) {
-
+        count++;
+        if(count == 900){
+            throw new AvoidStackOverflowException("eh");
+        }
         // Is it an empty intersection? break
         // If not
         // Look if it is a friendly stone, then recurseive the method
@@ -76,7 +87,15 @@ public class GoLogic {
                 throw new StoneHasLibertiesBreakSearchException("yes!");
             }
             if (stone.equals(stoneColor)) {
-                stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+
+                if(stonesToBeRemoved.stream()
+                        .filter(a ->
+                                a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor))
+                        .count() == 0){
+
+                    stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+
+                };
                 checkFourNeightbours(goban, stoneColor, x, y);
             }
             if(!stone.equals(stoneColor)){

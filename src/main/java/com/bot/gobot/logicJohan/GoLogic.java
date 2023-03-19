@@ -8,7 +8,7 @@ import java.util.Objects;
 public class GoLogic {
 
     private List<LogicStone> stonesToBeRemoved = new ArrayList<>();
-
+    int count = 0;
     // Its "b",        4,      4
     public String[][] run(String[][] goban, String placesStoneColor, int x, int y) {
 
@@ -49,6 +49,10 @@ public class GoLogic {
     }
 
     public boolean checkFourNeightbours(String[][] goban, String stoneColor, int x, int y) {
+        count++;
+        if(count == 1000){
+            return false;
+        }
         stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
         checkNeighbour(goban, stoneColor, x + 1, y); // to right
         checkNeighbour(goban, stoneColor, x - 1, y); // to left
@@ -58,6 +62,7 @@ public class GoLogic {
     }
 
     private void checkNeighbour(String[][] goban, String stoneColor, int x, int y) {
+
         // Is it an empty intersection? break
         // If not
         // Look if it is a friendly stone, then recurseive the method
@@ -66,13 +71,16 @@ public class GoLogic {
 
         // if its a edge stone, catch exception
         try {
-            String stoneToRight = goban[x][y];
-            if (stoneToRight.equals(".")) {
+            String stone = goban[x][y];
+            if (stone.equals(".")) {
                 throw new StoneHasLibertiesBreakSearchException("yes!");
             }
-            if (stoneToRight.equals(stoneColor)) {
+            if (stone.equals(stoneColor)) {
                 stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
                 checkFourNeightbours(goban, stoneColor, x, y);
+            }
+            if(!stone.equals(stoneColor)){
+                return;
             }
         } catch (IndexOutOfBoundsException e) {
             // Oh corner position.

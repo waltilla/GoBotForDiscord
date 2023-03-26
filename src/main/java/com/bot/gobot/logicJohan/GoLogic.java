@@ -53,20 +53,23 @@ public class GoLogic {
     public boolean checkFourNeightbours(String[][] goban, String stoneColor, int x, int y) {
 
 
-        if(stonesToBeRemoved.stream()
-                .filter(a ->
-                        a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor))
-                .count() == 0){
+        // if the stone is not in the list of stones, add it
+        if(placesStoneIs_NOT_InTheStonesToBeRemovedList(stoneColor, x, y)){
 
             stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+            checkNeighbour(goban, stoneColor, x + 1, y); // to right
+            checkNeighbour(goban, stoneColor, x - 1, y); // to left
+            checkNeighbour(goban, stoneColor, x, y + 1); // to on top
+            checkNeighbour(goban, stoneColor, x, y - 1); // to on under
+        }
 
-            };
-
-        checkNeighbour(goban, stoneColor, x + 1, y); // to right
-        checkNeighbour(goban, stoneColor, x - 1, y); // to left
-        checkNeighbour(goban, stoneColor, x, y + 1); // to on top
-        checkNeighbour(goban, stoneColor, x, y - 1); // to on under
         return true;
+    }
+
+    //returns true if the stone not in the list
+    private boolean placesStoneIs_NOT_InTheStonesToBeRemovedList(String stoneColor, int x, int y) {
+        return stonesToBeRemoved.stream().noneMatch(a ->
+                a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor));
     }
 
     private void checkNeighbour(String[][] goban, String stoneColor, int x, int y) {
@@ -88,14 +91,6 @@ public class GoLogic {
             }
             if (stone.equals(stoneColor)) {
 
-                if(stonesToBeRemoved.stream()
-                        .filter(a ->
-                                a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor))
-                        .count() == 0){
-
-                    stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
-
-                };
                 checkFourNeightbours(goban, stoneColor, x, y);
             }
             if(!stone.equals(stoneColor)){

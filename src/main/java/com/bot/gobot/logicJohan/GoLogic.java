@@ -18,16 +18,10 @@ public class GoLogic {
         // Check four neighbours and see if they are the opposite color.
         List<LogicStone> opponentsStones = check4ClosestNeighboursIfItsAnOpponentStone(goban, placesStoneColor, x, y);
 
-        int count  = 0;
         // check if the four neighbours and its potential group is alive.
         // in the test its a black stone placed "b"
         for (LogicStone whiteStone : opponentsStones) {
 
-            count++;
-
-            if (count == 1){
-                System.out.println(1);
-            }
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
@@ -60,23 +54,17 @@ public class GoLogic {
     }
 
     public boolean checkFourNeightbours(String[][] goban, String stoneColor, int x, int y) {
-
-
-        // if the stone is not in the list of stones, add it
-        if(placesStoneIs_NOT_InTheStonesToBeRemovedList(stoneColor, x, y)){
-
+        if(placesStoneIs_NOT_InTheStonesToBeRemovedList(stoneColor, x, y)){                         // if the stone is not in the list of stones, add it
             stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
             checkNeighbour(goban, stoneColor, x + 1, y); // to right
             checkNeighbour(goban, stoneColor, x - 1, y); // to left
             checkNeighbour(goban, stoneColor, x, y + 1); // to on top
             checkNeighbour(goban, stoneColor, x, y - 1); // to on under
         }
-
         return true;
     }
 
-    //returns true if the stone not in the list
-    private boolean placesStoneIs_NOT_InTheStonesToBeRemovedList(String stoneColor, int x, int y) {
+    private boolean placesStoneIs_NOT_InTheStonesToBeRemovedList(String stoneColor, int x, int y) {     //returns true if the stone not in the list
         return stonesToBeRemoved.stream().noneMatch(a ->
                 a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor));
     }
@@ -86,26 +74,18 @@ public class GoLogic {
         if(count == 900){
             throw new AvoidStackOverflowException("eh");
         }
-        // Is it an empty intersection? break
-        // If not
-        // Look if it is a friendly stone, then recurseive the method
-        // If
-        // its a opponent stone remove one libertie.
-
-        // if its a edge stone, catch exception
         try {
             String stone = goban[x][y];
-            if (stone.equals(".")) {
+            if (stone.equals(".")) {                                                    // Is it an empty intersection? break
                 throw new StoneHasLibertiesBreakSearchException("yes!");
             }
-            if (stone.equals(stoneColor)) {
-
+            if (stone.equals(stoneColor)) {                                             // if its a friend search its freamds
                 checkFourNeightbours(goban, stoneColor, x, y);
             }
-            if(!stone.equals(stoneColor)){
+            if(!stone.equals(stoneColor)){                                              // if opponent stone, stop
                 return;
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {                                         // if its an edge, catch and countinue
             // Oh corner position.
         }
     }

@@ -12,15 +12,22 @@ public class GoLogic {
     // Its "b",        4,      4
     public String[][] run(String[][] goban, String placesStoneColor, int x, int y) {
 
+        printGoban(goban);
         //place the stone on the goban
         goban[x][y] = placesStoneColor;
         // Check four neighbours and see if they are the opposite color.
         List<LogicStone> opponentsStones = check4ClosestNeighboursIfItsAnOpponentStone(goban, placesStoneColor, x, y);
 
+        int count  = 0;
         // check if the four neighbours and its potential group is alive.
         // in the test its a black stone placed "b"
         for (LogicStone whiteStone : opponentsStones) {
 
+            count++;
+
+            if (count == 1){
+                System.out.println(1);
+            }
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
@@ -33,6 +40,8 @@ public class GoLogic {
 
         testIfCorrect(getGobanAfterWhiteStonesIsRemoved(), goban);
         printGoban(goban);
+        System.out.println(1);
+        printGoban(getGobanAfterWhiteStonesIsRemoved());
 
         return goban;
     }
@@ -178,8 +187,8 @@ public class GoLogic {
                 {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", "b", "b", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", "b", ".", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", "b", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", "b", ".", "b", ".", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", "b", ".", "b", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},

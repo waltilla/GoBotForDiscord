@@ -12,6 +12,7 @@ public class GoLogic {
     // Its "b",        4,      4
     public String[][] run(String[][] goban, String placesStoneColor, int x, int y) {
 
+        printGoban(goban);
         //place the stone on the goban
         goban[x][y] = placesStoneColor;
         // Check four neighbours and see if they are the opposite color.
@@ -20,6 +21,8 @@ public class GoLogic {
         // check if the four neighbours and its potential group is alive.
         // in the test its a black stone placed "b"
         for (LogicStone whiteStone : opponentsStones) {
+
+
 
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
@@ -33,6 +36,9 @@ public class GoLogic {
 
         testIfCorrect(getGobanAfterWhiteStonesIsRemoved(), goban);
         printGoban(goban);
+        System.out.println(1);
+        System.out.println(count);
+        printGoban(getGobanAfterWhiteStonesIsRemoved());
 
         return goban;
     }
@@ -43,25 +49,37 @@ public class GoLogic {
             checkFourNeightbours(goban, stoneColor, x, y);
             // if it reaches here, its probably dead stones...
             return false;
-        } catch (StoneHasLibertiesBreakSearchException e) {
+        } catch (StoneHasLibertiesBreakSearchException e ) {
             return true;
+        } catch (AvoidStackOverflowException t){
+            return false;
         }
     }
 
     public boolean checkFourNeightbours(String[][] goban, String stoneColor, int x, int y) {
-        count++;
-        if(count == 1000){
-            return false;
+
+
+        // if the stone is not in the list of stones, add it
+        if(placesStoneIs_NOT_InTheStonesToBeRemovedList(stoneColor, x, y)){
+
+            stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+            checkNeighbour(goban, stoneColor, x + 1, y); // to right
+            checkNeighbour(goban, stoneColor, x - 1, y); // to left
+            checkNeighbour(goban, stoneColor, x, y + 1); // to on top
+            checkNeighbour(goban, stoneColor, x, y - 1); // to on under
         }
-        stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
-        checkNeighbour(goban, stoneColor, x + 1, y); // to right
-        checkNeighbour(goban, stoneColor, x - 1, y); // to left
-        checkNeighbour(goban, stoneColor, x, y + 1); // to on top
-        checkNeighbour(goban, stoneColor, x, y - 1); // to on under
+
         return true;
     }
 
+    //returns true if the stone not in the list
+    private boolean placesStoneIs_NOT_InTheStonesToBeRemovedList(String stoneColor, int x, int y) {
+        return stonesToBeRemoved.stream().noneMatch(a ->
+                a.getPositionX() == x && a.getPositionY() == y && Objects.equals(a.getColor(), stoneColor));
+    }
+
     private void checkNeighbour(String[][] goban, String stoneColor, int x, int y) {
+        count++;
 
         // Is it an empty intersection? break
         // If not
@@ -76,7 +94,7 @@ public class GoLogic {
                 throw new StoneHasLibertiesBreakSearchException("yes!");
             }
             if (stone.equals(stoneColor)) {
-                stonesToBeRemoved.add(new LogicStone(stoneColor, x, y));
+
                 checkFourNeightbours(goban, stoneColor, x, y);
             }
             if(!stone.equals(stoneColor)){
@@ -160,12 +178,12 @@ public class GoLogic {
 
     private String[][] getGobanAfterWhiteStonesIsRemoved() {
         String[][] gobanCaptureTwoWhiteStone = {
+                {".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {"b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", "b", "b", "b", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", "b", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", "b", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},

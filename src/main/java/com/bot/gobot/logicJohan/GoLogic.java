@@ -18,16 +18,12 @@ public class GoLogic {
         // Check four neighbours and see if they are the opposite color.
         List<LogicStone> opponentsStones = check4ClosestNeighboursIfItsAnOpponentStone(goban, placesStoneColor, x, y);
 
-        int count  = 0;
         // check if the four neighbours and its potential group is alive.
         // in the test its a black stone placed "b"
         for (LogicStone whiteStone : opponentsStones) {
 
-            count++;
 
-            if (count == 1){
-                System.out.println(1);
-            }
+
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
@@ -41,6 +37,7 @@ public class GoLogic {
         testIfCorrect(getGobanAfterWhiteStonesIsRemoved(), goban);
         printGoban(goban);
         System.out.println(1);
+        System.out.println(count);
         printGoban(getGobanAfterWhiteStonesIsRemoved());
 
         return goban;
@@ -83,9 +80,7 @@ public class GoLogic {
 
     private void checkNeighbour(String[][] goban, String stoneColor, int x, int y) {
         count++;
-        if(count == 900){
-            throw new AvoidStackOverflowException("eh");
-        }
+
         // Is it an empty intersection? break
         // If not
         // Look if it is a friendly stone, then recurseive the method
@@ -183,14 +178,14 @@ public class GoLogic {
 
     private String[][] getGobanAfterWhiteStonesIsRemoved() {
         String[][] gobanCaptureTwoWhiteStone = {
-                {".", ".", ".", ".", ".", "b", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", "b", "b", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", "b", ".", "b", ".", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", "b", ".", "b", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", "b", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
-                {".", ".", ".", ".", ".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", "b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {"b", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
+                {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},
                 {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."},

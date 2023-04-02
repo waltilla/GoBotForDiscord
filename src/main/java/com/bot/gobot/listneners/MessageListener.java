@@ -8,10 +8,7 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.spec.MessageCreateSpec;
 import reactor.core.publisher.Mono;
 
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,15 +25,17 @@ public abstract class MessageListener {
         info = "";
         List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim", "Vickypod", "Bullenjullen");
         InputStream targetStream = null;
-
+        String filePathToGobanToPrint = System.getProperty("java.io.tmpdir") + "Output.png";
+        System.out.println(filePathToGobanToPrint);
         try {
             targetStream =
-                    new DataInputStream(new FileInputStream("src/main/resources/Output.png"));
+                    new DataInputStream(new FileInputStream(filePathToGobanToPrint));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         InputStream finalTargetStream = targetStream;
+
 
         return Mono.just(eventMessage)
                 .filter(message -> {
@@ -96,7 +95,7 @@ public abstract class MessageListener {
 
                         channel.createMessage(MessageCreateSpec.builder()
                                 .content("Your prompt: " + eventMessage.getContent() + "\n" + info)
-                                .addFile("src/main/resources/Output.png", finalTargetStream)
+                                .addFile(filePathToGobanToPrint, finalTargetStream)
                                 .build()))
                 .then();
         // Skriv om för att ta in message och sedan skicka ut bilden.

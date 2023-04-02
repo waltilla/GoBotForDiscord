@@ -17,8 +17,10 @@ public class ImageFromIntArray {
                 img.setRGB(x, y, imgArray[y][x]);
             }
         }
+        String tmpdir = System.getProperty("java.io.tmpdir")  + "Output.png";
+        System.out.println(tmpdir);
         try {
-            f = new File("src/main/resources/Output.png");
+            f = new File(tmpdir);
             ImageIO.write(img, "png", f);
         } catch (IOException e) {
             System.out.println("Error: " + e);

@@ -1,5 +1,6 @@
 package com.bot.gobot.go;
 
+import com.bot.gobot.go.logic.UpdateKifu;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,15 @@ public class Game {
         this.kifu = new Kifu();
     }
 
+    public void undo(){
+        players.forEach(s -> {
+            if(!s.equals(lastPlayerToPutAMove)){
+                lastPlayerToPutAMove = s.getPlayer();
+            }
+        });
+        getKifu().getListOfStones().remove(getKifu().listOfStones.size());
+    }
+
     public void addMove(String playerMakingMove, String playedPosition) {
         if (firstMove) {
             firstMove = false;
@@ -35,9 +45,13 @@ public class Game {
             lastPlayerToPutAMove = playerMakingMove;
         }else if (!Objects.equals(lastPlayerToPutAMove, playerMakingMove)){
             Player player = players.stream().filter(s -> s.player.equals(playerMakingMove)).findAny().get();
-            kifu.addMove(moveToStone(player, playedPosition));
+            Stone stone = moveToStone(player, playedPosition);
+            kifu = UpdateKifu.removeDeadStones(kifu, player.getColor(), stone.positionX, stone.positionY);
+            kifu.addMove(stone);
             lastPlayerToPutAMove = player.getPlayer();
         }
+
+
     }
 
     public Stone moveToStone(Player player, String move) {

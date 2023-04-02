@@ -18,16 +18,16 @@ import java.util.List;
 public abstract class MessageListener {
 
     Game game;
+    String info = "";
 
     public MessageListener() {
         game = new Game();
     }
 
     public Mono<Void> processMessage(final Message eventMessage) {
-
+        info = "";
         List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim", "Vickypod", "Bullenjullen");
         InputStream targetStream = null;
-
 
         try {
             targetStream =
@@ -58,14 +58,22 @@ public abstract class MessageListener {
                         // The bot responds "only" if its starts with &
                         if (messageFromPlayer.charAt(0) == '&') {
 
-                            String substring = messageFromPlayer.substring(1);
+                            String messageFromChat = messageFromPlayer.substring(1);
 
-                            if (substring.equals("ny")) {
+                            if (messageFromChat.equals("info")) {
+                                info = info();
+                            }
+
+                            if (messageFromChat.equals("new")) {
                                 game = new Game();
                             }
 
+                            if (messageFromChat.equals("undo")) {
+                                game.undo();
+                            }
+
                             try {
-                                game.addMove(eventMessage.getAuthor().get().getUsername(), substring);
+                                game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
                             } catch (Exception e) {
                                 System.out.println("prutt");
                             }
@@ -85,12 +93,23 @@ public abstract class MessageListener {
 
 
                         channel.createMessage(MessageCreateSpec.builder()
-                                .content("Your move: " + eventMessage.getContent())
+                                .content("Your prompt: " + eventMessage.getContent() + "\n" + info)
                                 .addFile("src/main/resources/Output.png", finalTargetStream)
                                 .build()))
                 .then();
-
         // Skriv om för att ta in message och sedan skicka ut bilden.
+    }
+
+    public String info() {
+        return  """
+                You have the following options: 
+                &new == new game
+                &12-12 == putting a stone on position 12x12
+                &undo == undo last move
+                
+                thats it. Have fun! 
+                                
+                """;
     }
 
 

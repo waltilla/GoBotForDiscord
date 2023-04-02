@@ -8,13 +8,17 @@ import java.util.List;
 @Getter
 public class Kifu {
 
-    List<Stone> kifu;
+    List<Stone> listOfStones;
 
     public Kifu() {
-        this.kifu = new ArrayList<Stone>();
+        this.listOfStones = new ArrayList<Stone>();
     }
 
     public void addMove(Stone stone) {
-        kifu.add(stone);
+        listOfStones.add(stone);
+    }
+
+    public void setListOfStones(List<Stone> stones){
+        listOfStones = stones;
     }
 }

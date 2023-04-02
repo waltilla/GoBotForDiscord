@@ -59,7 +59,7 @@ public class CreatePixelArrayFromKifu {
     }
 
     public static String[][] updateGobanWithPositionsFromKifu(String[][] goban, Kifu kifu){
-        kifu.getKifu().forEach(stone -> goban[stone.positionX][stone.positionY] = nameToChar(stone.getColor()));
+        kifu.getListOfStones().forEach(stone -> goban[stone.positionX][stone.positionY] = nameToChar(stone.getColor()));
         return goban;
     }
 

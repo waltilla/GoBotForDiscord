@@ -1,10 +1,10 @@
-package com.bot.gobot.logicJohan;
+package com.bot.gobot.go.logic;
 
 
-public class main2 {
+public class TestGoLogic {
 
     public static void main(String[] args) {
-        new GoLogic().run(getGobanCaptureTwoWhiteStone(), "b", 1, 1);
+        new RemoveDeadStones().check(getGobanCaptureTwoWhiteStone(), "b", 1, 1);
     }
 
     private static String[][] getGobanCaptureTwoWhiteStone() {

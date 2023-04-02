@@ -1,16 +1,19 @@
-package com.bot.gobot.logicJohan;
+package com.bot.gobot.go.logic;
+
+import com.bot.gobot.go.logic.exceptions.AvoidStackOverflowException;
+import com.bot.gobot.go.logic.exceptions.StoneHasLibertiesBreakSearchException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class GoLogic {
+public class RemoveDeadStones {
 
     private List<LogicStone> stonesToBeRemoved = new ArrayList<>();
     int count = 0;
     // Its "b",        4,      4
-    public String[][] run(String[][] goban, String placesStoneColor, int x, int y) {
+    public String[][] check(String[][] goban, String placesStoneColor, int x, int y) {
 
         printGoban(goban);
         //place the stone on the goban
@@ -22,8 +25,6 @@ public class GoLogic {
         // in the test its a black stone placed "b"
         for (LogicStone whiteStone : opponentsStones) {
 
-
-
             // empty global list with stones to be removed before each check
             stonesToBeRemoved.clear();
             // check if the stone and its neighbours is alive
@@ -33,13 +34,6 @@ public class GoLogic {
                 removeDeadStones(goban);
             }
         }
-
-        testIfCorrect(getGobanAfterWhiteStonesIsRemoved(), goban);
-        printGoban(goban);
-        System.out.println(1);
-        System.out.println(count);
-        printGoban(getGobanAfterWhiteStonesIsRemoved());
-
         return goban;
     }
 

@@ -64,19 +64,21 @@ public abstract class MessageListener {
                                 info = info();
                             }
 
-                            if (messageFromChat.equals("new")) {
+                            else if (messageFromChat.equals("new")) {
                                 game = new Game();
                             }
 
-                            if (messageFromChat.equals("undo")) {
+                            else if (messageFromChat.equals("undo")) {
                                 game.undo();
+                            } else {
+                                try {
+                                    game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
+                                } catch (Exception e) {
+                                    System.out.println("prutt");
+                                }
                             }
 
-                            try {
-                                game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
-                            } catch (Exception e) {
-                                System.out.println("prutt");
-                            }
+
 
                             ImageFromIntArray.generate(
                                     CreatePixelArrayFromKifu.

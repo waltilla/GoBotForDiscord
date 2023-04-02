@@ -28,7 +28,7 @@ public class Game {
                 lastPlayerToPutAMove = s.getPlayer();
             }
         });
-        getKifu().getListOfStones().remove(getKifu().listOfStones.size());
+        getKifu().getListOfStones().remove(getKifu().listOfStones.size()-1);
     }
 
     public void addMove(String playerMakingMove, String playedPosition) {

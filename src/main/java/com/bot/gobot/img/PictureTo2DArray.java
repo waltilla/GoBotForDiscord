@@ -1,5 +1,7 @@
 package com.bot.gobot.img;
 
+import org.springframework.core.io.ClassPathResource;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -12,7 +14,7 @@ public class PictureTo2DArray {
 
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(new ClassPathResource(path).getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }

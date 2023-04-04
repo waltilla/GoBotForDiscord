@@ -23,19 +23,19 @@ public class ImgParts {
     int[][] san;
 
     public ImgParts() {
-        this.blackstone = PictureTo2DArray.convert("src/main/resources/blackstone.bmp");
-        this.intersection  = PictureTo2DArray.convert("src/main/resources/intersection.bmp");
-        this.lowerLeft = PictureTo2DArray.convert("src/main/resources/lowerleft.bmp");
-        this.lowerRight= PictureTo2DArray.convert("src/main/resources/lowerright.bmp");
-        this.upperLeft = PictureTo2DArray.convert("src/main/resources/upperleft.bmp");
-        this.upperRight  = PictureTo2DArray.convert("src/main/resources/upperright.bmp");
-        this.whitestone= PictureTo2DArray.convert("src/main/resources/whitestone.bmp");
-        this.debug2= PictureTo2DArray.convert("src/main/resources/debug2.bmp");
-        this.debug3= PictureTo2DArray.convert("src/main/resources/debug3.bmp");
-        this.left  = PictureTo2DArray.convert("src/main/resources/left.bmp");
-        this.right= PictureTo2DArray.convert("src/main/resources/right.bmp");
-        this.top= PictureTo2DArray.convert("src/main/resources/top.bmp");
-        this.bottom= PictureTo2DArray.convert("src/main/resources/bottom.bmp");
-        this.san= PictureTo2DArray.convert("src/main/resources/san.bmp");
+        this.blackstone = PictureTo2DArray.convert("blackstone.bmp");
+        this.intersection  = PictureTo2DArray.convert("intersection.bmp");
+        this.lowerLeft = PictureTo2DArray.convert("lowerleft.bmp");
+        this.lowerRight= PictureTo2DArray.convert("lowerright.bmp");
+        this.upperLeft = PictureTo2DArray.convert("upperleft.bmp");
+        this.upperRight  = PictureTo2DArray.convert("upperright.bmp");
+        this.whitestone= PictureTo2DArray.convert("whitestone.bmp");
+        this.debug2= PictureTo2DArray.convert("debug2.bmp");
+        this.debug3= PictureTo2DArray.convert("debug3.bmp");
+        this.left  = PictureTo2DArray.convert("left.bmp");
+        this.right= PictureTo2DArray.convert("right.bmp");
+        this.top= PictureTo2DArray.convert("top.bmp");
+        this.bottom= PictureTo2DArray.convert("bottom.bmp");
+        this.san= PictureTo2DArray.convert("san.bmp");
     }
 }

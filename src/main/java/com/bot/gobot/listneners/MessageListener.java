@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class MessageListener {
 
@@ -23,7 +24,10 @@ public abstract class MessageListener {
 
     public Mono<Void> processMessage(final Message eventMessage) {
         info = "";
-        List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim", "Vickypod", "Bullenjullen");
+        List<String> listOfUsers = Arrays.asList("Timmyonetoe", "BooGrim");
+
+
+
         InputStream targetStream = null;
         String filePathToGobanToPrint = System.getProperty("java.io.tmpdir") + "Output.png";
         System.out.println(filePathToGobanToPrint);
@@ -37,8 +41,21 @@ public abstract class MessageListener {
         InputStream finalTargetStream = targetStream;
 
 
+
+
+        if(listOfUsers.stream().filter( s -> s.equals(eventMessage.getAuthor().get().getUsername())).toList().size() == 0 ||
+                eventMessage.getData().content().charAt(0) != '&'){
+            return Mono.empty().then();
+        }
+
+
+
+
+
+
         return Mono.just(eventMessage)
                 .filter(message -> {
+
                     final Boolean canPlay = message.getAuthor()
                             .map(user -> !user.isBot())
                             .orElse(false);
@@ -46,9 +63,12 @@ public abstract class MessageListener {
                     System.out.println(message.getData().content());
 
 
+
+
                     if (canPlay) {
 
                         message.getAuthor().ifPresent(listOfUsers::contains);
+
                         String messageFromPlayer = eventMessage.getContent();
                         if (messageFromPlayer.charAt(0) != '&' && eventMessage.getData().channelId().asString().equals("1075151561401061386")) {
                             return false;
@@ -98,6 +118,9 @@ public abstract class MessageListener {
                                 .addFile(filePathToGobanToPrint, finalTargetStream)
                                 .build()))
                 .then();
+
+
+
         // Skriv om för att ta in message och sedan skicka ut bilden.
     }
 

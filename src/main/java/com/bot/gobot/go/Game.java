@@ -31,18 +31,17 @@ public class Game {
         this.kifu = new Gson().fromJson(gameFromJson, Kifu.class);
         firstMove = false;
         players = kifu.listOfStones.stream().map(s -> new Player(s.getPlayer(), s.color)).distinct().toList();
-        lastPlayerToPutAMove = kifu.getListOfStones().get(kifu.listOfStones.size() -1).player;
+        lastPlayerToPutAMove = kifu.getListOfStones().get(kifu.listOfStones.size() - 1).player;
     }
 
-    public void undo(){
+    public void undo() {
         players.forEach(s -> {
-            if(!s.equals(lastPlayerToPutAMove)){
+            if (!s.equals(lastPlayerToPutAMove)) {
                 lastPlayerToPutAMove = s.getPlayer();
             }
         });
-        getKifu().getListOfStones().remove(getKifu().listOfStones.size()-1);
+        getKifu().getListOfStones().remove(getKifu().listOfStones.size() - 1);
     }
-
 
 
     public void addMove(String playerMakingMove, String playedPosition) {
@@ -57,7 +56,7 @@ public class Game {
             players.add(new Player(playerMakingMove, "white"));
             kifu.addMove(moveToStone(players.get(1), playedPosition));
             lastPlayerToPutAMove = playerMakingMove;
-        }else if (!Objects.equals(lastPlayerToPutAMove, playerMakingMove)){
+        } else if (!Objects.equals(lastPlayerToPutAMove, playerMakingMove)) {
             Player player = players.stream().filter(s -> s.player.equals(playerMakingMove)).findAny().get();
             Stone stone = moveToStone(player, playedPosition);
             kifu = UpdateKifu.removeDeadStones(kifu, player.getColor(), stone.positionX, stone.positionY);
@@ -75,8 +74,8 @@ public class Game {
                 Integer.parseInt(strArray[1]) - 1);
     }
 
-    public void printKifu(){
-       System.out.println(new Gson().toJson(kifu, Kifu.class));
+    public void printKifu() {
+        System.out.println(new Gson().toJson(kifu, Kifu.class));
     }
 
     public String getKifuAsString() {

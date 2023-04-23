@@ -49,6 +49,8 @@ public abstract class MessageListener {
                         messageToPlayer = info();
                     } else if (messageWithoutQuestionmark.equals("new")) {
                         game = new Game();
+                    } else if (messageWithoutQuestionmark.split("-")[0].equals("load")) {
+                        newGameFromJson(messageWithoutQuestionmark);
                     } else if (messageWithoutQuestionmark.equals("undo")) {
                         game.undo();
                     } else {
@@ -63,6 +65,14 @@ public abstract class MessageListener {
                                 .addFile(filePathToGobanToPrint, finalTargetStream)
                                 .build()))
                 .then();
+    }
+
+    private void newGameFromJson(String messageWithoutQuestionmark){
+        try {
+            game = new Game(messageWithoutQuestionmark.split("-")[1]);
+        } catch (Exception e){
+            System.out.println("Parsing json did not go well");
+        }
     }
 
     private void makeMove(Message eventMessage) {

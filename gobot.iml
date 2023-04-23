@@ -119,5 +119,6 @@
     <orderEntry type="library" name="Maven: com.discord4j:stores-api:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.austinv11.servicer:Servicer:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: be.brugo:brugo:0.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.10.1" level="project" />
   </component>
 </module>

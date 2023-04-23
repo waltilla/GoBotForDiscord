@@ -1,6 +1,7 @@
 package com.bot.gobot.go;
 
 import com.bot.gobot.go.logic.UpdateKifu;
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,17 @@ public class Game {
         this.kifu = new Kifu();
     }
 
+    public Game(String gameFromJson) {
+        loadStartedGame(gameFromJson);
+    }
+
+    private void loadStartedGame(String gameFromJson) {
+        this.kifu = new Gson().fromJson(gameFromJson, Kifu.class);
+        firstMove = false;
+        players = kifu.listOfStones.stream().map(s -> new Player(s.getPlayer(), s.color)).distinct().toList();
+        lastPlayerToPutAMove = kifu.getListOfStones().get(kifu.listOfStones.size() -1).player;
+    }
+
     public void undo(){
         players.forEach(s -> {
             if(!s.equals(lastPlayerToPutAMove)){
@@ -30,6 +42,8 @@ public class Game {
         });
         getKifu().getListOfStones().remove(getKifu().listOfStones.size()-1);
     }
+
+
 
     public void addMove(String playerMakingMove, String playedPosition) {
         if (firstMove) {
@@ -50,8 +64,7 @@ public class Game {
             kifu.addMove(stone);
             lastPlayerToPutAMove = player.getPlayer();
         }
-
-
+        printKifu();
     }
 
     public Stone moveToStone(Player player, String move) {
@@ -60,5 +73,9 @@ public class Game {
                 player.getColor(),
                 Integer.parseInt(strArray[0]) - 1,
                 Integer.parseInt(strArray[1]) - 1);
+    }
+
+    public void printKifu(){
+       System.out.println(new Gson().toJson(kifu, Kifu.class));
     }
 }

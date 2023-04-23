@@ -10,5 +10,9 @@ discord:
 server:
   port: 8888
 
+allowed:
+  players: Timmyonetoe, BooGrim
+
+
 
 

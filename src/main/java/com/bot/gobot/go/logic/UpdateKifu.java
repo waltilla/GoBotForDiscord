@@ -5,7 +5,6 @@ import com.bot.gobot.go.Stone;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UpdateKifu {
 
@@ -19,13 +18,12 @@ public class UpdateKifu {
                 positionY);
 
         return updateKifuWithKifuNotContainRemovedStones(kifu, removeDeadStonesKifu);
-
     }
 
     private static Kifu updateKifuWithKifuNotContainRemovedStones(Kifu kifu, String[][] removeDeadStonesKifu) {
         List<Stone> stones = kifu.getListOfStones().stream().filter(stone -> {
 
-            String positionOnTheGoban = removeDeadStonesKifu[stone.positionX ][stone.positionY];
+            String positionOnTheGoban = removeDeadStonesKifu[stone.positionX][stone.positionY];
 
             if (nameToChar(stone.getColor()).equals(positionOnTheGoban)) {
                 return true;

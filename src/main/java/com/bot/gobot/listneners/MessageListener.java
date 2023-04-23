@@ -32,12 +32,12 @@ public abstract class MessageListener {
         // Check if message is from author in allowed list of players in application.yml
         if (allowedPlayers.getPlayers().stream().filter(s -> s.equals(eventMessage.getAuthor().get().getUsername())).toList().size() == 1
                 && eventMessage.getData().content().charAt(0) == '&') {
-            return playAMove(eventMessage);
+            return doAction(eventMessage);
         }
         return Mono.empty();
     }
 
-    private Mono<Void> playAMove(Message eventMessage) {
+    private Mono<Void> doAction(Message eventMessage) {
 
         String filePathToGobanToPrint = System.getProperty("java.io.tmpdir") + "Output.png";
         InputStream finalTargetStream = targetStream(filePathToGobanToPrint);

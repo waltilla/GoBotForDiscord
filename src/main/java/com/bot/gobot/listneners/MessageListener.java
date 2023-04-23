@@ -3,8 +3,6 @@ package com.bot.gobot.listneners;
 import com.bot.gobot.config.AllowedPlayersConfig;
 import com.bot.gobot.go.Game;
 import com.bot.gobot.go.Goban;
-import com.bot.gobot.go.Player;
-import com.bot.gobot.go.Stone;
 import com.bot.gobot.img.CreatePixelArrayFromKifu;
 import com.bot.gobot.img.ImageFromIntArray;
 import discord4j.core.object.entity.Message;
@@ -46,16 +44,16 @@ public abstract class MessageListener {
 
         return Mono.just(eventMessage)
                 .filter(message -> {
-                        var messageFromChat = eventMessage.getContent().substring(1);
-                        if (messageFromChat.equals("info")) {
-                            messageToPlayer = info();
-                        } else if (messageFromChat.equals("new")) {
-                            game = new Game();
-                        } else if (messageFromChat.equals("undo")) {
-                            game.undo();
-                        } else {
-                            makeMove(eventMessage);
-                        }
+                    var messageWithoutQuestionmark = eventMessage.getContent().substring(1);
+                    if (messageWithoutQuestionmark.equals("info")) {
+                        messageToPlayer = info();
+                    } else if (messageWithoutQuestionmark.equals("new")) {
+                        game = new Game();
+                    } else if (messageWithoutQuestionmark.equals("undo")) {
+                        game.undo();
+                    } else {
+                        makeMove(eventMessage);
+                    }
                     return true;
                 })
                 .flatMap(Message::getChannel)
@@ -71,7 +69,7 @@ public abstract class MessageListener {
         // Remove &
         String messageFromChat = eventMessage.getContent().substring(1);
 
-        if(validMove(messageFromChat)){
+        if (validMove(messageFromChat)) {
             try {
                 game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
                 messageToPlayer = messageFromChat;
@@ -84,7 +82,7 @@ public abstract class MessageListener {
         }
     }
 
-    public boolean validMove(String move){
+    public boolean validMove(String move) {
         String[] strArray = move.split("-");
         return Integer.parseInt(strArray[0]) >= 1 && Integer.parseInt(strArray[0]) <= 19 &&
                 Integer.parseInt(strArray[1]) >= 1 && Integer.parseInt(strArray[1]) <= 19;
@@ -111,7 +109,4 @@ public abstract class MessageListener {
                                 
                 """;
     }
-
-
-
 }

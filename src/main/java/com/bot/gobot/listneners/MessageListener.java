@@ -3,6 +3,8 @@ package com.bot.gobot.listneners;
 import com.bot.gobot.config.AllowedPlayersConfig;
 import com.bot.gobot.go.Game;
 import com.bot.gobot.go.Goban;
+import com.bot.gobot.go.Player;
+import com.bot.gobot.go.Stone;
 import com.bot.gobot.img.CreatePixelArrayFromKifu;
 import com.bot.gobot.img.ImageFromIntArray;
 import discord4j.core.object.entity.Message;
@@ -34,7 +36,6 @@ public abstract class MessageListener {
                 && eventMessage.getData().content().charAt(0) == '&') {
             return playAMove(eventMessage);
         }
-
         return Mono.empty();
     }
 
@@ -45,7 +46,7 @@ public abstract class MessageListener {
 
         return Mono.just(eventMessage)
                 .filter(message -> {
-                        String messageFromChat = eventMessage.getContent().substring(1);
+                        var messageFromChat = eventMessage.getContent().substring(1);
                         if (messageFromChat.equals("info")) {
                             messageToPlayer = info();
                         } else if (messageFromChat.equals("new")) {
@@ -53,7 +54,7 @@ public abstract class MessageListener {
                         } else if (messageFromChat.equals("undo")) {
                             game.undo();
                         } else {
-                            makeMove(eventMessage, messageFromChat);
+                            makeMove(eventMessage);
                         }
                     return true;
                 })
@@ -66,16 +67,27 @@ public abstract class MessageListener {
                 .then();
     }
 
-    private void makeMove(Message eventMessage, String messageFromChat) {
-        try {
-            game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
-            messageToPlayer = messageFromChat;
-            ImageFromIntArray.generate(
-                    CreatePixelArrayFromKifu.
-                            createImageOfGobanFromKifu(Goban.getCleanGoban(), game.getKifu()));
-        } catch (Exception e) {
-            System.out.println("Error...");
+    private void makeMove(Message eventMessage) {
+        // Remove &
+        String messageFromChat = eventMessage.getContent().substring(1);
+
+        if(validMove(messageFromChat)){
+            try {
+                game.addMove(eventMessage.getAuthor().get().getUsername(), messageFromChat);
+                messageToPlayer = messageFromChat;
+                ImageFromIntArray.generate(
+                        CreatePixelArrayFromKifu.
+                                createImageOfGobanFromKifu(Goban.getCleanGoban(), game.getKifu()));
+            } catch (Exception e) {
+                System.out.println("Error...");
+            }
         }
+    }
+
+    public boolean validMove(String move){
+        String[] strArray = move.split("-");
+        return Integer.parseInt(strArray[0]) >= 1 && Integer.parseInt(strArray[0]) <= 19 &&
+                Integer.parseInt(strArray[1]) >= 1 && Integer.parseInt(strArray[1]) <= 19;
     }
 
     private InputStream targetStream(String Path) {
@@ -99,4 +111,7 @@ public abstract class MessageListener {
                                 
                 """;
     }
+
+
+
 }

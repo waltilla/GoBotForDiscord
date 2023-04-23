@@ -53,6 +53,8 @@ public abstract class MessageListener {
                         newGameFromJson(messageWithoutQuestionmark);
                     } else if (messageWithoutQuestionmark.equals("undo")) {
                         game.undo();
+                    } else if (messageWithoutQuestionmark.equals("printkifu")) {
+                        messageToPlayer = game.getKifuAsString();
                     } else {
                         makeMove(eventMessage);
                     }
@@ -67,10 +69,10 @@ public abstract class MessageListener {
                 .then();
     }
 
-    private void newGameFromJson(String messageWithoutQuestionmark){
+    private void newGameFromJson(String messageWithoutQuestionmark) {
         try {
             game = new Game(messageWithoutQuestionmark.split("-")[1]);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Parsing json did not go well");
         }
     }

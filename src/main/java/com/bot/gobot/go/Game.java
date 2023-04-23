@@ -78,4 +78,8 @@ public class Game {
     public void printKifu(){
        System.out.println(new Gson().toJson(kifu, Kifu.class));
     }
+
+    public String getKifuAsString() {
+        return new Gson().toJson(kifu, Kifu.class);
+    }
 }
